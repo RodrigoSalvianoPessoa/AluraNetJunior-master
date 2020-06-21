@@ -22,9 +22,19 @@ namespace CasaDoCodigo.Repositories
         {
             foreach (var livro in livros)
             {
+                if (livro.Categoria != null)
+                {
+                    var categoriaDB = 
+
+                    if (categoriaDB == null)
+                    {
+                        contexto.Set<Categoria>().Add(categoriaDB);
+                    }
+                }
+
                 if (!dbSet.Where(p => p.Codigo == livro.Codigo).Any())
                 {
-                    dbSet.Add(new Produto(livro.Codigo, livro.Nome, livro.Preco));
+                    dbSet.Add(new Produto(livro.Codigo, livro.Nome, livro.Preco, livro.Categoria));
                 }
             }
             await contexto.SaveChangesAsync();
@@ -35,7 +45,7 @@ namespace CasaDoCodigo.Repositories
     {
         public string Codigo { get; set; }
         public string Nome { get; set; }
-        public string Categoria { get; set; }
+        public Categoria Categoria { get; set; }
         public string Subcategoria { get; set; }
         public decimal Preco { get; set; }
     }
