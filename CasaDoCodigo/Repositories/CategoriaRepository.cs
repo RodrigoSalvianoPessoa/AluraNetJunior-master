@@ -12,7 +12,7 @@ namespace CasaDoCodigo.Repositories
 
         public async Task Save(string nome)
         {
-            var categoriaDB = contexto.Set<Categoria>().Where(c => c.Nome == nome).SingleOrDefault();
+            var categoriaDB = contexto.Set<Categoria>().SingleOrDefault(c => c.Nome == nome);
 
             if (categoriaDB == null)
             {
@@ -23,9 +23,9 @@ namespace CasaDoCodigo.Repositories
             }
         }
 
-        public Categoria GetCategoria(int categoriaId)
+        public async Task<Categoria> GetCategoria(string nome)
         {
-            return contexto.Set<Categoria>().Where(c => c.Id == categoriaId).SingleOrDefault();
+            return contexto.Set<Categoria>().SingleOrDefault(c => c.Nome == nome);
         }
     }
 }

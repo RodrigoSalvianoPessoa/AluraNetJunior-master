@@ -9,11 +9,14 @@ namespace CasaDoCodigo.Repositories
 {
     public class ProdutoRepository : BaseRepository<Produto>, IProdutoRepository
     {
-        public ProdutoRepository(ApplicationContext contexto) : base(contexto)
+        private readonly ICategoriaRepository _categoriaRepository;
+
+        public ProdutoRepository(ApplicationContext contexto, ICategoriaRepository categoriaRepository) : base(contexto)
         {
+            _categoriaRepository = categoriaRepository;
         }
 
-        public IList<Produto> GetProdutos()
+        public List<Produto> GetProdutos()
         {
             return dbSet.ToList();
         }
@@ -22,19 +25,16 @@ namespace CasaDoCodigo.Repositories
         {
             foreach (var livro in livros)
             {
-                if (livro.Categoria != null)
+                if (!String.IsNullOrEmpty(livro.Categoria))
                 {
-                    var categoriaDB = 
-
-                    if (categoriaDB == null)
-                    {
-                        contexto.Set<Categoria>().Add(categoriaDB);
-                    }
+                    await _categoriaRepository.Save(livro.Categoria);
                 }
+                
+                var categoria = await _categoriaRepository.GetCategoria(livro.Categoria);
 
-                if (!dbSet.Where(p => p.Codigo == livro.Codigo).Any())
+                if (!dbSet.Any(p => p.Codigo == livro.Codigo))
                 {
-                    dbSet.Add(new Produto(livro.Codigo, livro.Nome, livro.Preco, livro.Categoria));
+                    dbSet.Add(new Produto(livro.Codigo, livro.Nome, livro.Preco, categoria));
                 }
             }
             await contexto.SaveChangesAsync();
@@ -45,7 +45,7 @@ namespace CasaDoCodigo.Repositories
     {
         public string Codigo { get; set; }
         public string Nome { get; set; }
-        public Categoria Categoria { get; set; }
+        public string Categoria { get; set; }
         public string Subcategoria { get; set; }
         public decimal Preco { get; set; }
     }
