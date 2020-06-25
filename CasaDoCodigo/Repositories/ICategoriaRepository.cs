@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CasaDoCodigo.Models;
 
 namespace CasaDoCodigo.Repositories
@@ -7,5 +8,6 @@ namespace CasaDoCodigo.Repositories
     {
         Task Save(string nome);
         Task<Categoria> GetCategoria(string nome);
+        List<Categoria> GetCategorias();
     }
 }

@@ -14,19 +14,27 @@ namespace CasaDoCodigo.Controllers
         private readonly IProdutoRepository produtoRepository;
         private readonly IPedidoRepository pedidoRepository;
         private readonly IItemPedidoRepository itemPedidoRepository;
+        private readonly ICategoriaRepository categoriaRepository;
 
         public PedidoController(IProdutoRepository produtoRepository,
             IPedidoRepository pedidoRepository,
-            IItemPedidoRepository itemPedidoRepository)
+            IItemPedidoRepository itemPedidoRepository,
+            ICategoriaRepository categoriaRepository)
         {
             this.produtoRepository = produtoRepository;
             this.pedidoRepository = pedidoRepository;
             this.itemPedidoRepository = itemPedidoRepository;
+            this.categoriaRepository = categoriaRepository;
         }
 
         public IActionResult BuscaDeProdutos()
         {
-            return View(produtoRepository.GetProdutos());
+            var produtos = produtoRepository.GetProdutos().Distinct();
+            var categorias = categoriaRepository.GetCategorias();
+
+            BuscaDeProdutosViewModel buscaDeProdutos = new BuscaDeProdutosViewModel(produtos, categorias);
+
+            return View(buscaDeProdutos);
         }
 
         public IActionResult Carrossel()

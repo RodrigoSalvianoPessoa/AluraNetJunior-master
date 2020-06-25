@@ -1,4 +1,5 @@
 ﻿using CasaDoCodigo.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,6 +27,11 @@ namespace CasaDoCodigo.Repositories
         public async Task<Categoria> GetCategoria(string nome)
         {
             return contexto.Set<Categoria>().SingleOrDefault(c => c.Nome == nome);
+        }
+
+        public List<Categoria> GetCategorias()
+        {
+            return dbSet.ToList();
         }
     }
 }

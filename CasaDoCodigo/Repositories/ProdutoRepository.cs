@@ -21,6 +21,15 @@ namespace CasaDoCodigo.Repositories
             return dbSet.ToList();
         }
 
+        public List<Produto> GetProdutosCategoria()
+        {
+            var produtos = contexto.Set<Produto>()
+                .Where(p => contexto.Set<Categoria>().Select(c => c.Id).Contains(p.Categoria.Id))
+                .ToList();
+
+            return produtos;
+        }
+
         public async Task SaveProdutos(List<Livro> livros)
         {
             foreach (var livro in livros)
