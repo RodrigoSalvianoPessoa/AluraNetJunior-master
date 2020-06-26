@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "BuscaDeProdutos";
 }
 
@@ -33,7 +32,7 @@
             @{
                 const int TAMANHO_PAGINA = 4;
 
-                int paginas = (int)Math.Ceiling((double)Model.Produtos.Count() / TAMANHO_PAGINA);
+                int paginas = (int)Math.Ceiling((double)categoria.Produtos.Count() / TAMANHO_PAGINA);
             }
 
             @for (int pagina = 0; pagina < paginas; pagina++)
@@ -43,7 +42,7 @@
                     <div class="row">
 
                         @{
-                            var produtosDaPagina = Model.Produtos.Skip(pagina * TAMANHO_PAGINA).Take(TAMANHO_PAGINA);
+                            var produtosDaPagina = categoria.Produtos.Skip(pagina * TAMANHO_PAGINA).Take(TAMANHO_PAGINA);
                         }
 
                         @foreach (var produto in produtosDaPagina)
@@ -65,12 +64,9 @@
                                 </div>
                             </div>
                         }
-
                     </div>
-
                 </div>
             }
-
         </div>
         <!-- Controls -->
         <a class="left carousel-control" href="#my-carousel-1" role="button" data-slide="prev">

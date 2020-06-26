@@ -16,10 +16,8 @@ namespace CasaDoCodigo.Controllers
         private readonly IItemPedidoRepository itemPedidoRepository;
         private readonly ICategoriaRepository categoriaRepository;
 
-        public PedidoController(IProdutoRepository produtoRepository,
-            IPedidoRepository pedidoRepository,
-            IItemPedidoRepository itemPedidoRepository,
-            ICategoriaRepository categoriaRepository)
+        public PedidoController(IProdutoRepository produtoRepository, IPedidoRepository pedidoRepository, 
+                                IItemPedidoRepository itemPedidoRepository, ICategoriaRepository categoriaRepository)
         {
             this.produtoRepository = produtoRepository;
             this.pedidoRepository = pedidoRepository;
@@ -29,9 +27,9 @@ namespace CasaDoCodigo.Controllers
 
         public IActionResult BuscaDeProdutos()
         {
-            var produtos = produtoRepository.GetProdutos().Distinct();
+            var produtos = produtoRepository.GetProdutos();
             var categorias = categoriaRepository.GetCategorias();
-
+            
             BuscaDeProdutosViewModel buscaDeProdutos = new BuscaDeProdutosViewModel(produtos, categorias);
 
             return View(buscaDeProdutos);
