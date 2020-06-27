@@ -2,7 +2,7 @@
     ViewData["Title"] = "BuscaDeProdutos";
 }
 
-@model BuscaDeProdutosViewModel;
+@model List<Produto>;
 
 <div class="container">
     <div class="row">
@@ -22,27 +22,25 @@
     </div>
 </div>
 
-@foreach (var categoria in Model.Categorias)
-{
-    <h3>@categoria.Nome</h3>
-    <div id="my-carousel-1" class="carousel slide" data-ride="carousel">
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox">
 
-            @{
-                const int TAMANHO_PAGINA = 4;
+<div id="my-carousel-1" class="carousel slide" data-ride="carousel">
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
 
-                int paginas = (int)Math.Ceiling((double)categoria.Produtos.Count() / TAMANHO_PAGINA);
-            }
+        @foreach (var produtoCategoria in Model)
+        {
+            const int TAMANHO_PAGINA = 4;
+
+            int paginas = (int)Math.Ceiling((double) Model.Count() / TAMANHO_PAGINA);
 
             @for (int pagina = 0; pagina < paginas; pagina++)
             {
                 <div class="item @(pagina == 0 ? "active" : "")">
-
+                    <h3>@produtoCategoria.Categoria.Nome</h3>
                     <div class="row">
 
                         @{
-                            var produtosDaPagina = categoria.Produtos.Skip(pagina * TAMANHO_PAGINA).Take(TAMANHO_PAGINA);
+                            var produtosDaPagina = produtoCategoria.Categoria.Produtos.Skip(pagina * TAMANHO_PAGINA).Take(TAMANHO_PAGINA);
                         }
 
                         @foreach (var produto in produtosDaPagina)
@@ -67,15 +65,15 @@
                     </div>
                 </div>
             }
-        </div>
-        <!-- Controls -->
-        <a class="left carousel-control" href="#my-carousel-1" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#my-carousel-1" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
+        }
     </div>
-}
+    <!-- Controls -->
+    <a class="left carousel-control" href="#my-carousel-1" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#my-carousel-1" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>

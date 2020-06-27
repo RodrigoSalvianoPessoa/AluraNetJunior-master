@@ -18,13 +18,20 @@ namespace CasaDoCodigo.Repositories
 
         public List<Produto> GetProdutos()
         {
-            return dbSet.ToList();
+            var listaProdutos = contexto.Set<Produto>()
+                .Include(c => c.Categoria)
+                .ThenInclude(c => c.Produtos)
+                .ToList();
+            
+            //return dbSet.ToList();
+            return listaProdutos;
         }
 
         public List<Produto> GetProdutosCategoria()
         {
             var produtos = contexto.Set<Produto>()
-                .Where(p => contexto.Set<Categoria>().Select(c => c.Id).Contains(p.Categoria.Id))
+                .Where(p => contexto.Set<Categoria>()
+                    .Select(c => c.Id).Contains(p.Categoria.Id))
                 .ToList();
 
             return produtos;
