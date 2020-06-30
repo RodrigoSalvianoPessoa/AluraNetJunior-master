@@ -27,12 +27,7 @@ namespace CasaDoCodigo.Controllers
 
         public IActionResult BuscaDeProdutos()
         {
-            //var produtos = produtoRepository.GetProdutos();
-            //var categorias = categoriaRepository.GetCategorias();
-            
-            //BuscaDeProdutosViewModel buscaDeProdutos = new BuscaDeProdutosViewModel(produtos, categorias);
-
-            return View(produtoRepository.GetProdutos());
+            return View(categoriaRepository.GetCategorias());
         }
 
         public IActionResult Carrossel()

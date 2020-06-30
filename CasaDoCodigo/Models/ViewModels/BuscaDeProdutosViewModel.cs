@@ -4,14 +4,10 @@ namespace CasaDoCodigo.Models.ViewModels
 {
     public class BuscaDeProdutosViewModel
     {
-        public BuscaDeProdutosViewModel(IList<Produto> produtos, IList<Categoria> categorias)
-        {
-            Produtos = produtos;
-            Categorias = categorias;
-        }
+        public int Id { get; }
 
-        public IList<Produto> Produtos { get; }
+        public string NomeCategoria { get; }
 
-        public IList<Categoria> Categorias { get; }
+        public List<Produto> Produtos { get; }
     }
 }

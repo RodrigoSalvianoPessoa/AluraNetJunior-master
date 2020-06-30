@@ -2,7 +2,8 @@
     ViewData["Title"] = "BuscaDeProdutos";
 }
 
-@model List<Produto>;
+@using Microsoft.EntityFrameworkCore.Internal
+@model List<Categoria>;
 
 <div class="container">
     <div class="row">
@@ -22,25 +23,36 @@
     </div>
 </div>
 
+@{
+    var categorias = Model;
+}
 
 <div id="my-carousel-1" class="carousel slide" data-ride="carousel">
     <!-- Wrapper for slides -->
+     
+    
     <div class="carousel-inner" role="listbox">
 
-        @foreach (var produtoCategoria in Model)
-        {
+        @{
             const int TAMANHO_PAGINA = 4;
 
             int paginas = (int)Math.Ceiling((double) Model.Count() / TAMANHO_PAGINA);
 
+        }
+
+        
+
             @for (int pagina = 0; pagina < paginas; pagina++)
             {
+                @foreach (var categoria in categorias)
+                {
+                    <h3>Categoria : @categoria.Nome</h3>
                 <div class="item @(pagina == 0 ? "active" : "")">
-                    <h3>@produtoCategoria.Categoria.Nome</h3>
+
                     <div class="row">
 
                         @{
-                            var produtosDaPagina = produtoCategoria.Categoria.Produtos.Skip(pagina * TAMANHO_PAGINA).Take(TAMANHO_PAGINA);
+                            var produtosDaPagina = categoria.Produtos.Skip(pagina * TAMANHO_PAGINA).Take(TAMANHO_PAGINA);
                         }
 
                         @foreach (var produto in produtosDaPagina)
@@ -67,6 +79,7 @@
             }
         }
     </div>
+    
     <!-- Controls -->
     <a class="left carousel-control" href="#my-carousel-1" role="button" data-slide="prev">
         <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace CasaDoCodigo.Repositories
 {
@@ -31,7 +32,9 @@ namespace CasaDoCodigo.Repositories
 
         public List<Categoria> GetCategorias()
         {
-            return dbSet.ToList();
+            return dbSet.Include(c => c.Produtos)
+                .ThenInclude(p => p.Categoria)
+                .ToList();
         }
     }
 }
