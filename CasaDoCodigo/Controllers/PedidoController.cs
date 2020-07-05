@@ -25,14 +25,22 @@ namespace CasaDoCodigo.Controllers
             this.categoriaRepository = categoriaRepository;
         }
 
-        public IActionResult BuscaDeProdutos()
+        public async Task<IActionResult> BuscaDeProdutos(string pesquisa)
         {
-            return View(categoriaRepository.GetCategorias());
+            var listaDeProdutos = await produtoRepository.GetProdutos(pesquisa);
+            var buscaDeProdutosViewModel = new BuscaDeProdutosViewModel(listaDeProdutos);
+
+            if (!buscaDeProdutosViewModel.Produtos.Any())
+            {
+                buscaDeProdutosViewModel.Nome = "Nenhum produto encontrado";
+            }
+
+            return View(buscaDeProdutosViewModel);
         }
 
-        public IActionResult Carrossel()
+        public async Task<IActionResult> Carrossel()
         {
-            return View(produtoRepository.GetProdutos());
+            return View(await produtoRepository.GetProdutos());
         }
 
         public async Task<IActionResult> Carrinho(string codigo)

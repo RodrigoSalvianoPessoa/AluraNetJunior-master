@@ -8,6 +8,5 @@ namespace CasaDoCodigo.Repositories
     {
         Task Save(string nome);
         Task<Categoria> GetCategoria(string nome);
-        List<Categoria> GetCategorias();
     }
 }

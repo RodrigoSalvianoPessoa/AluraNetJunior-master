@@ -1,8 +1,6 @@
 ﻿using CasaDoCodigo.Models;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace CasaDoCodigo.Repositories
 {
@@ -28,13 +26,6 @@ namespace CasaDoCodigo.Repositories
         public async Task<Categoria> GetCategoria(string nome)
         {
             return contexto.Set<Categoria>().SingleOrDefault(c => c.Nome == nome);
-        }
-
-        public List<Categoria> GetCategorias()
-        {
-            return dbSet.Include(c => c.Produtos)
-                .ThenInclude(p => p.Categoria)
-                .ToList();
         }
     }
 }
